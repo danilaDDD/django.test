@@ -1,0 +1,108 @@
+{% load static %}
+<div class="footer-top" style="background-image:url({% static "base/images/footer-background.png" %})">
+    <div class="wrapper">
+    <div class="left-col">
+        <div class="logo">
+        <a href="http://slavtour-html.servertest.pro/">
+            <p>туроператор с 1993 года</p>
+            <img src="{% static "base/images/logo.png" %}" alt="">
+        </a>
+        </div>              
+        <div class="projects">
+        <a href="http://slavtour-html.servertest.pro/"><span>Псковские уроки</span> <img src="{% static "base/images/vector/white-arrow.png" %}" alt=""></a>
+        <a href="http://slavtour-html.servertest.pro/"><span>Живые уроки</span> <img src="{% static "base/images/vector/white-arrow.png" %}" alt=""></a>
+        <a href="http://slavtour-html.servertest.pro/"><span>Серебряное ожерелье</span> <img src="{% static "base/images/vector/white-arrow.png" %}" alt=""></a>
+        </div>
+        <div class="menu-social">
+        <a href="http://slavtour-html.servertest.pro/#"><img src="{% static "base/images/icon/vk-footer.png" %}" alt=""></a>
+        <a href="http://slavtour-html.servertest.pro/#"><img src="{% static "base/images/icon/instagram-footer.png"%}" alt=""></a>
+        <a href="http://slavtour-html.servertest.pro/#"><img src="{% static "base/images/icon/whatsapp-footer.png"%}" alt=""></a>
+        </div>
+    </div>
+    <div class="right-col">
+        <div class="info">
+        {% for baner in baners %}
+        <div class="info-item">
+            <a class="info-item-header" href="http://slavtour-html.servertest.pro/">{{baner.title}}</a>
+            <ul class="list">
+            {% for tour_type in baner.tour_types %}
+            <li><a href="http://slavtour-html.servertest.pro/">{{tour_type.title}}</a></li>   
+            {% endfor %}          
+            </ul>
+        </div>
+        {% endfor %}
+         
+        </div>
+        </div>
+        <nav class="nav">
+        <ul>
+            <li><a href="http://slavtour-html.servertest.pro/#">О нас</a></li>
+            <li><a href="http://slavtour-html.servertest.pro/#">Новости</a></li>
+            <li><a href="http://slavtour-html.servertest.pro/#">Отзывы</a></li>
+        </ul>
+        </nav>
+        <div class="footer-contacts">
+
+        {% for office in offices %}
+
+            {% if office.inline %}
+                <div class="contacts-info-js">
+                <h3>{{office.title}}</h3>                
+
+                {% for phone in office.phones %}
+                    <a href="tel:{{phone.value}}">{{phone.value}}</a>
+                {% endfor %}
+
+                {% for email in office.emails %}
+                    <a href="tel:{{email.value}}">{{email.value}}</a>
+                {% endfor %}
+                
+            {% else %}
+                <div class="contacts-info">
+                <h3>{{office.title}}</h3>                
+                <p>{{office.address}}</p>
+
+                {% for phone in office.phones %}
+                    <a href="tel:{{phone.value}}">{{phone.value}}</a>
+                {% endfor %}
+
+                {% for email in office.emails %}
+                    <a href="tel:{{email.value}}">{{email.value}}</a>
+                {% endfor %}
+
+                <div class="worktime">
+                {% for shed_it in office.shedule_items %}
+                    <p><span>{{shed_it.days}}:</span>{{shed_it.times}}</p>
+                {% endfor %}
+                </div>
+            {% endif %}
+            </div>
+        {% endfor %}
+        </div>
+        <!--<div class="contacts-info">
+            <div class="contacts-info__item">
+            <h3>туры из Пскова</h3>
+            <a href="tel:+78112793097">+7 (960) 225-52-25</a>
+            <a href="mailto:mgp-pskov@yandex.ru">mgp-pskov@yandex.ru</a>
+            </div>
+            <div class="contacts-info__item">
+            <h3>туры по Пскову</h3>
+            <a href="tel:+79113573535">+7 (911) 357-35-35</a>
+            <a href="mailto:priempskov@yandex.ru">priempskov@yandex.ru</a>
+            </div>
+        </div>-->
+         
+        </div>
+    </div>
+    </div>
+
+</div>
+<div class="footer-bottom">
+    <div class="wrapper">
+    <p>ООО «Славянский Тур» Россия, 180007, г. Псков, ул. Петровская, д. 31</p>
+    <a href="http://slavtour-html.servertest.pro/">Политика конфиденциальности</a>
+    <a href="https://www.coffeestudio.ru/"><img src="{% static "base/images/icon/CoffeeStudioLogo.png"%}" alt="">
+        <p>Сделано в агентстве интернет-рекламы <span>Coffee Studio</span></p>
+    </a>
+    </div>
+</div>

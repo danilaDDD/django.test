@@ -1,0 +1,84 @@
+{% load static %}
+
+ <header class="header">
+<div class="wrapper">
+    <div class="header-logo">
+      <a href="">
+        <p>туроператор с 1993 года</p>
+        <img src="{% static "base/images/logo.png" %}" alt="">
+      </a>
+    </div>
+
+    <div class="header-contacts">
+    {% for office in offices %}
+
+      {% if office.inline %}
+        <div class="main-office">
+        {% else %}
+        <div class="main-office-js">
+      {% endif %}
+
+      <span class="office-title">{{office.title}}</span>
+
+      {% if not office.inline %}
+      <p class="office-adress">{{office.address}}</p>      
+      {% endif %}
+
+      {% for phone in office.phones %}
+      <a class="office-number" href="tel:{{phone.value}}">{{phone.value}}</a>
+       {% endfor %}
+
+       {% for email in office.emails %}
+      <a class="office-mail" href="{{email.value}}">{{email.value}}</a>
+      {% endfor %}
+
+      <div class="office-work">
+      {% for sh_it in office.shedule_items %}
+        <p><span>{{sh_it.days}}: </span>{{sh_it.times}}</p>
+      {% endfor %}
+      </div>
+
+    </div>      
+    {% endfor %}  
+
+    </div>       
+   
+      <div class="order">
+        <div class="order-phone">
+          <a href="http://slavtour-html.servertest.pro/#">Заказать звонок</a>
+        </div>
+        <div class="order-tour">
+          <a href="http://slavtour-html.servertest.pro/#">Заказать тур</a>
+        </div>
+        <div class="order-contacts">
+          <a>Наши контакты</a>
+        </div>
+      </div>
+
+    </div>
+</div>
+</header> 
+  </section><section class="menu">
+    <div class="wrapper">
+
+      <div class="menu-icon">
+        <img src="{% static "base/images/icon/menu-icon.png" %}" alt="">
+      </div>
+
+      <nav class="nav">
+        <ul>
+          <li><a href="http://slavtour-html.servertest.pro/#">О нас</a></li>
+          <li><a href="http://slavtour-html.servertest.pro/#">Контакты</a></li>
+          <li><a href="http://slavtour-html.servertest.pro/#">Новости</a></li>
+          <li><a href="http://slavtour-html.servertest.pro/#">Отзывы</a></li>
+        </ul>
+      </nav>
+
+      <div class="menu-social">
+        <a href="http://slavtour-html.servertest.pro/#"><img src="{% static "base/images/icon/whatsapp.png" %}" alt=""></a>
+        <a href="http://slavtour-html.servertest.pro/#"><img src="{% static "base/images/icon/vk-footer.png" %}" alt=""></a>
+        <a href="http://slavtour-html.servertest.pro/#"><img src="{% static "base/images/icon/instagram.png" %}" alt=""></a>
+      </div>
+    </div>
+  </section>
+ 

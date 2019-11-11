@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Туры{% endblock title %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static "tours/css/tours.css" %}">
+{% endblock style %}
+
+{% block article %}
+{% if baners %}
+<section class="submenu">
+    <div class="wrapper">
+        <ul>
+        {% for baner in baners %}
+            <li>
+            <a href="/tours?baner_id={{baner.id}}"><span>{{baner.title}}</span></a>
+            </li>
+        {% endfor %}             
+        </ul>
+    </div>
+    {% endif %}
+    
+</section>
+        <section class="breadcrumbs">
+          <div class="wrapper">
+            <ul>
+              <li>
+                <a href="">Главная</a>
+              </li>
+              <li>
+                <a href="/tours?baner_id={{curr_baner.id}}">{{curr_baner.title}}</a>
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <div class="page-content inner-category">
+          <div class="wrapper">
+            <aside class="sidebar">
+              <div class="category">
+                <div class="category-btn">
+                  <h3>{{curr_baner.title}}</h3>
+                </div>
+            {% for baner in baners %}   
+                    
+            
+                <div class="category">
+                <div class="category-btn">
+                  <h3>{{baner.title}}</h3>
+                </div>
+              </div>
+            {% endfor %}               
+              
+
+              <div class="text-widget">
+                <h3>Гостиницы, отели, турбазы</h3>
+                <a href="#">Псков</a>
+                <a href="#">Псковская область</a>
+              </div>
+              <div class="text-widget">
+                <h3>Развлечения</h3>
+                <a href="#">Рестораны и кафе</a>
+                <a href="#">Клубы, развлекательные комплексы</a>
+                <a href="#">Аквапарк, каток, планетарий</a>
+                <a href="#">Шопинг, сувениры</a>
+                <a href="#">Филармония, теарт</a>
+              </div>
+              <div class="text-widget">
+                <h3>Интерактивные карты</h3>
+                <a href="#">Псков</a>
+                <a href="#">Псковская область</a>
+              </div>
+
+            </aside>
+            <div class="page-content-items">
+              <div class="content-container">               
+            
+            {% if tours %}
+                {% for tour in tours %}
+                <a class="page-content__item" href="/tours/{{tour.id}}/">
+                  <div class="content-item__img">
+                    <img src="{{tour.photo.url}}" alt="">
+                  </div>
+                  <div class="content-item__title">
+                    <span>{{tour.title}}</span>
+                    {% if tour.towns %}
+                    <ul class="towns">
+                    {% for town in tour.towns %}
+                      <li>{{town}}</li>
+                    {% endfor %}
+                    </ul>
+                    {% endif %}
+                    <span class="tour-days">{{tour.duration}}</span>
+                  </div>
+                </a>
+                {% endfor %}
+            {% endif %}                 
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+    </div>
+{% endblock article%}

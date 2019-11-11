@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+ {% block title %}Список мероприятий{% endblock title %}
+
+ {% block style %}
+ <link rel="stylesheet" href="{% static "events/css/event_list.css" %}">
+ {% endblock style %}
+
+ {% block article %}
+<section class="page">
+
+        <div class="page-content inner-category">
+          <div class="wrapper">            
+            <div class="page-content-items">
+              <div class="content-container">
+              {% for event in events %}
+
+                <a class="page-content__item" href="/events/{{event.id}}/">
+                  <div class="content-item__img">
+                    <img src="{{event.photo.url}}" alt="">
+                  </div>
+                  <div class="content-item__title">
+                    <span>{{event.title}}</span>
+                    <ul class="towns">
+                      <li>{{event.subtitle}}</li>                      
+                    </ul>
+                    <span class="tour-days">{{event.publish_date}}</span>
+                  </div>
+                </a>
+                {% endfor %}
+            </div>
+                 
+            </div>
+          </div>
+        </div>
+      </section>
+ {% endblock article %}
