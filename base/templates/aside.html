@@ -1,0 +1,70 @@
+ <aside class="sidebar">
+     {% if baner_id %}
+       {% if tour_type_id %}
+         {% for baner in baners %}
+           {% if baner.id == baner_id %}
+             <div class="category active-category">
+               <div class="category-btn">
+                  <h3>{{ baner.title }}</h3>
+               </div>
+
+               <ul class="category-content">
+               {% for tour_type in baner.tour_types %}
+
+                 {% if tour_type_id ==  tour_type.id %}
+                  <li class="category-content__items active-tour-type">
+                 {% else %}
+                  <li class="category-content__items">
+                 {% endif %}
+                    <span class="sidebar-btn">{{tour_type.title}}</span>
+                  </li>
+               {% endfor %}
+                </ul>
+             </div>
+           {% else %}
+            <div class="category">
+                <div class="category-btn">
+                      <h3>{{ baner.title }}</h3>
+                </div>
+            </div>
+           {% endif %}
+         {% endfor %}
+
+       {% else %}
+            {% for baner in baners %}
+
+              {% if baner.id == baner_id %}
+                <div class="category active-baner">
+                    <div class="category-btn">
+                      <h3>{{ baner.title }}</h3>
+                    </div>
+
+                   <ul class="category-content">
+                   {% for tour_type in baner.tour_types %}
+                      <li class="category-content__items">
+                        <span class="sidebar-btn">{{tour_type.title}}</span>
+                      </li>
+                   {% endfor %}
+                    </ul>
+                </div>
+              {% else %}
+                  <div class="category">
+                      <div class="category-btn">
+                          <h3>{{ baner.title }}</h3>
+                      </div>
+                  </div>
+              {% endif %}
+
+            {% endfor %}
+
+       {% endif %}
+     {% else %}
+         {% for baner in baners %}
+               <div class="category">
+                  <div class="category-btn">
+                     <h3>{{ baner.title }}</h3>
+                  </div>
+              </div>
+         {% endfor %}
+     {% endif %}
+</aside>

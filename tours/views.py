@@ -1,33 +1,33 @@
 from django.shortcuts import render
 
-from tours.models import Tour,ToursBaner
-from base.views import BaseView
+from tours.models import Tour, Article
+from base.views import SvkBaseView, SvkListView, SvkDetailsView
+from base.models import DataModel
 from slavanka.params import DB_TIME_FORMAT
+from tours.models import TourSection, ArticleSection, Tour, Article
+
 
 # Create your views here.
-class ToursListView(BaseView):
-    template_name='tours_list.html'
-
-    def get(self,request,*arg,**kwargs):
-        context=super(ToursListView,self).get_context_data(**kwargs)
-
-        baner_id=request.GET.get('baner_id',None)
-        tour_type_id=request.GET.get('tour_type_id',None)
-
-        context['tours']=Tour.get_filtreted_list(baner_id=baner_id,tour_type_id=tour_type_id)         
-        
-        cur_baner=None
-        if not baner_id==None:
-            cur_baner=ToursBaner.objects.get(pk=baner_id)
-        elif not tour_type_id==None:
-            cur_baner=ToursBaner.objects.filter(tourtype__id=tour_type_id)
-        else:
-            pass
-        context['curr_baner']=cur_baner
-        
-
-        
-        return self.render_to_response(context)
 
 
-     
+class ToursListView(SvkListView):
+    model = Tour
+    title = "Список туров"
+
+
+
+class ArticleListView(SvkListView):
+    model = Article
+    title = "Список статей"
+
+
+class ToursDetailsView(SvkDetailsView):
+    title = 'Тур'
+    section_model = TourSection
+    article_model = Tour
+
+
+class ArticleDetailsView(SvkDetailsView):
+    title = "Статья"
+    section_model = ArticleSection
+    article_model = Article

@@ -1,0 +1,28 @@
+{% load static %}
+{% load thumbnail %}
+
+{% if baners %}
+<section class="submenu">
+        <div class="wrapper">
+            <ul>
+             {% if baner_id %}
+                {% for baner in baners %}
+                    {% if baner_id == baner.id %}
+                    <li class="active-baner">
+                    {% else %}
+                    <li>
+                    {% endif %}
+                       <a href="{% url "tour_list" %}?baner_id={{baner.id}}"><span>{{baner.title}}</span></a>
+                    </li>
+                {% endfor %}
+             {% else %}
+                {% for baner in baners %}
+                    <li>
+                       <a href="{% url "tour_list" %}?baner_id={{baner.id}}"><span>{{baner.title}}</span></a>
+                    </li>
+                {% endfor %}
+             {% endif %}
+            </ul>
+        </div>
+</section>
+{% endif %}

@@ -5,54 +5,54 @@
 {% block title %}Туры{% endblock title %}
 
 {% block style %}
-<link rel="stylesheet" href="{% static "tours/css/tours.css" %}">
+<link rel="stylesheet" href="{% static "tours/css/tour_list.css" %}">
 {% endblock style %}
 
 {% block article %}
-{% if baners %}
+
+
 <section class="submenu">
     <div class="wrapper">
         <ul>
+     {% if baner_id %}
         {% for baner in baners %}
+            {% if baner_id == baner.id %}
+            <li class="active-baner">
+            <a href="/tours?baner_id={{baner.id}}"><span>{{baner.title}}</span></a>
+            </li>
+            {
+            {% else %}
             <li>
             <a href="/tours?baner_id={{baner.id}}"><span>{{baner.title}}</span></a>
             </li>
-        {% endfor %}             
+        {% endfor %}
+    {% endif %}
         </ul>
     </div>
-    {% endif %}
-    
 </section>
-        <section class="breadcrumbs">
-          <div class="wrapper">
-            <ul>
-              <li>
-                <a href="">Главная</a>
-              </li>
-              <li>
-                <a href="/tours?baner_id={{curr_baner.id}}">{{curr_baner.title}}</a>
-              </li>
-            </ul>
-          </div>
-        </section>
 
-        <div class="page-content inner-category">
+ 
+<section class="breadcrumbs">
+  <div class="wrapper">
+    <ul>
+      <li>
+
+        <a href="">Главная</a>
+      </li>
+    </ul>
+  </div>
+</section>
+      
+       <div class="page-content inner-category">
           <div class="wrapper">
             <aside class="sidebar">
+              {% for baner in baners %} 
               <div class="category">
-                <div class="category-btn">
-                  <h3>{{curr_baner.title}}</h3>
-                </div>
-            {% for baner in baners %}   
-                    
-            
-                <div class="category">
                 <div class="category-btn">
                   <h3>{{baner.title}}</h3>
                 </div>
               </div>
-            {% endfor %}               
-              
+            {% endfor %}
 
               <div class="text-widget">
                 <h3>Гостиницы, отели, турбазы</h3>
@@ -77,24 +77,27 @@
             <div class="page-content-items">
               <div class="content-container">               
             
-            {% if tours %}
-                {% for tour in tours %}
-                <a class="page-content__item" href="/tours/{{tour.id}}/">
+            {% if objects %}
+                {% for object in objects %}
+                <a class="page-content__item" href="/tours/{{object.id}}/">
                   <div class="content-item__img">
-                    <img src="{{tour.photo.url}}" alt="">
+                    <img src="{{object.photo.url}}" alt="">
                   </div>
                   <div class="content-item__title">
-                    <span>{{tour.title}}</span>
-                    {% if tour.towns %}
+                    <span>{{object.title}}</span>
+                    {% if object.list %}
                     <ul class="towns">
-                    {% for town in tour.towns %}
-                      <li>{{town}}</li>
+                    {% for item in object.list %}
+                      <li>{{item}}</li>
                     {% endfor %}
                     </ul>
                     {% endif %}
-                    <span class="tour-days">{{tour.duration}}</span>
+                    <span class="tour-days">{{object.info}}</span>
                   </div>
                 </a>
+                {% empty %}
+                  <h1>{{empty_msg}}</h1>
+
                 {% endfor %}
             {% endif %}                 
               </div>
@@ -102,6 +105,5 @@
 
           </div>
         </div>
-      </section>
-    </div>
-{% endblock article%}
+     
+{% endblock article %}

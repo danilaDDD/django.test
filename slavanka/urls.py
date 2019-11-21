@@ -14,21 +14,27 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path,re_path
+from django.urls import path, re_path
 from django.conf import settings
 from django.conf.urls.static import static
 
 from main.views import HomeView
 from events.views import *
 from tours.views import *
+from tours.models import Tour,Article
+from events.models import Event
+
 
 urlpatterns = [
-    path('',HomeView.as_view(),name='home'),
-    path('tours/',ToursListView.as_view(),name='tours_list'),
-    path('events/<int:id>/',EventDetails.as_view(),name='event'),
-    path('events/',EventListView.as_view(),name='event_list'),
+    path('', HomeView.as_view(), name='home'),
+    path('events/<int:id>/', EventDetailsView.as_view(), name=Event.url_name),
+    path('tours/<int:id>/', ToursDetailsView.as_view(), name=Tour.url_name),
+    path('articles/<int:id>/', ArticleDetailsView.as_view(), name=Article.url_name),
+    path('events/', EventListView.as_view(), name='event_list'),
+    path('articles/', ArticleListView.as_view(), name='article_list'),
+    path('tours/', ToursListView.as_view(), name='tour_list'),
     path('admin/', admin.site.urls),
 ]
 
-urlpatterns+=static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
-urlpatterns+=static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

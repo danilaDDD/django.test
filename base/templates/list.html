@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load thumbnail %}
+
+ {% block title %}{{title}}{% endblock title %}
+
+ {% block style %}
+ <link rel="stylesheet" href="{% static "base/css/list.css" %}">
+ {% endblock style %}
+
+ {% block article %}
+<section class="page">
+{% include "submenu.html" %}
+<section class="breadcrumbs">
+  <div class="wrapper">
+    <ul>
+      <li>
+        <a href="">Главная</a>
+      </li>
+    </ul>
+  </div>
+</section>
+        <div class="page-content inner-category">
+          <div class="wrapper">
+              {% if aside %}
+                {% include "aside.html" %}
+              {% endif %}
+
+            <div class="page-content-items">
+              <div class="content-container">
+              {% for object in objects %}
+
+                <a class="page-content__item" href="{{object.get_url}}">
+                  <div class="content-item__img">
+                    <img src="{{object.photo.grect.url}}" alt="">
+                  </div>
+                  <div class="content-item__title">
+                    <span>{{object.get_title}}</span>
+                    <ul class="towns">
+                        {% for info in object.get_list_info %}
+                      <li>{{info}}</li>
+                        {% endfor %}
+                    </ul>
+                    <span class="tour-days">{{object.get_date}}</span>
+                  </div>
+                </a>
+                {% endfor %}
+            </div>
+                 
+            </div>
+          </div>
+        </div>
+      </section>
+ {% endblock article %}

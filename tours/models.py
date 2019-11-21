@@ -1,105 +1,182 @@
 from django.db import models as mds
-from slavanka.params import short_len,long_len,DB_TIME_FORMAT
+from easy_thumbnails.fields import ThumbnailerImageField
 
-from datetime import timedelta
-from datetime import datetime as dt
+from slavanka.params import short_len, long_len, DB_TIME_FORMAT
+from base.models import DataModel
+from section.models import TextSection
 
-# Create your models here.
-class ToursBaner(mds.Model):
+
+class ToursBanner(mds.Model):
     @staticmethod
-    def get_hierarch_all():
-        baners=[]
+    def get_hierarchy_all(baner_id=None):
 
-        for baner in ToursBaner.objects.all():
-            baner.tour_types=[
-                tour_type 
-                for tour_type in TourType.objects.filter(baner=baner)
-            ]
+        baners = []
+        if baner_id is None:
+            for baner in ToursBanner.objects.all():
+                baner.tour_types = [
+                    tour_type
+                    for tour_type in TourType.objects.filter(baner=baner)
+                ]
 
-            baners.append(baner)
-        
+                baners.append(baner)
+
+        else:
+
+            for baner in ToursBanner.objects.all():
+
+                if baner.id == baner_id:
+                    baner.tour_types = [
+                        tour_type
+                        for tour_type in TourType.objects.filter(baner=baner)
+                    ]
+
+                else:
+
+                    baner.tour_types = []
+
+                baners.append(baner)
+
         return baners
 
-    title=mds.CharField(max_length=short_len,default='')
-    photo=mds.ImageField(null=True)
+    title = mds.CharField(max_length=short_len, default='', verbose_name='Заголовок')
+    photo = ThumbnailerImageField(upload_to='photos', verbose_name='Главное фото')
 
     def __str__(self):
         return self.title
-    
+
+    class Meta:
+        verbose_name = 'Банер'
+        verbose_name_plural = 'Банеры'
+
 
 class TourType(mds.Model):
-    title=mds.CharField(max_length=short_len,default='Тур')
-    baner=mds.ForeignKey(
-        ToursBaner,
+    title = mds.CharField(max_length=short_len, default='Тур', verbose_name='Заголовок')
+    baner = mds.ForeignKey(
+        ToursBanner,
         on_delete=mds.CASCADE
     )
 
     def __str__(self):
         return self.title
-    
 
-class Tour(mds.Model):
+    class Meta:
+        verbose_name = 'Тип тура'
+        verbose_name_plural = 'Типы туров'
+
+
+class Tour(DataModel):
     @staticmethod
     def get_short_list(size=4):
-        all_tours=Tour.objects.all()
-        if len(all_tours)>size:
+        all_tours = Tour.objects.all()
+        if len(all_tours) > size:
             return all_tours[:size]
         else:
             return all_tours
-    
+
     @staticmethod
-    def get_filtreted_list(baner_id=None,tour_type_id=None):
-        tours=[]
-
-        if not tour_type_id==None:
-            tours=Tour.objects.filter(tour_type__id=tour_type_id)
-        elif not baner_id==None:
-            tours=Tour.objects.filter(tour_type__baner__id=baner_id)
+    def get_response(baner_id=None, tour_type_id=None):
+        data_list = []
+        if tour_type_id is not None:
+            data_list = Tour.objects.filter(tour_type__id=tour_type_id)
+        elif baner_id is not None:
+            data_list = Tour.objects.filter(tour_type__baner__id=baner_id)
         else:
-            tours=Tour.objects.all()
-                 
-        for tour in tours:            
-            tour.duration=(tour.end_date-tour.start_date).days
+            data_list = Tour.objects.all()
 
-            path=tour.path
-            towns=[]
-            if not path=='':
-                try:
-                    towns=path.split('-')
-                except Exception:
-                    pass
-            tour.towns=towns
+        data_list = list(data_list) + list(Article.get_response(baner_id,tour_type_id))
 
-        return tours
+        return data_list
 
-
-    title=mds.CharField(max_length=long_len,default='')     
-    path=mds.CharField(max_length=long_len,blank=True,default='')
-    start_date=mds.DateTimeField(null=True,blank=True)
-    end_date=mds.DateTimeField(null=True,blank=True)
-    info=mds.TextField(blank=True,default='')
-    photo=mds.ImageField(null=True)
-    logotip=mds.ImageField(null=True)
-
-    tour_type=mds.ForeignKey(
+    title = mds.CharField(max_length=long_len, default='', verbose_name='Заголовок')
+    photo = ThumbnailerImageField(upload_to='photos', verbose_name='Главное фото')
+    path = mds.CharField(max_length=long_len, blank=True, default='', verbose_name='Путь прохождения')
+    start_date = mds.DateTimeField(null=True, blank=True, verbose_name='Дата начала')
+    end_date = mds.DateTimeField(null=True, blank=True, verbose_name='Дата конца')
+    info = mds.TextField(blank=True, default='', verbose_name='Информация')
+    logotip = ThumbnailerImageField(null=True, verbose_name='Логотип')
+    tour_type = mds.ForeignKey(
         TourType,
         on_delete=mds.CASCADE
     )
 
+    url_name = 'tour'
+
+    def get_date(self):
+        return self.get_days()
+
+    def get_list_info(self):
+        return self.path.split('-')
+
+    def get_days(self):
+        days = (self.end_date - self.start_date).days
+
+        msg=''
+        if days == 1:
+            msg = ' день'
+        elif days in range(2,4):
+            msg = ' дня'
+        else:
+            msg = ' дней'
+
+        return str(days) + msg
+
     def __str__(self):
         return self.title
-         
 
-class TourSection(mds.Model):
-    time=mds.TimeField(null=True)
-    title=mds.CharField(max_length=short_len,null=True)
-    text=mds.TextField(default='',blank=True)
-    day=mds.IntegerField(blank=True) 
-    tour=mds.ForeignKey(
+    class Meta:
+        verbose_name = 'Тур'
+        verbose_name_plural = 'Туры'
+
+
+class Article(DataModel):
+    @staticmethod
+    def get_response(baner_id=None, tour_type_id=None):
+        articls = []
+        if tour_type_id is not None:
+            articls = Article.objects.filter(tour_type__id=tour_type_id)
+        elif baner_id is not None:
+            articls = Article.objects.filter(tour_type__baner__id=baner_id)
+        else:
+            articls = Article.objects.all()
+
+        return articls
+
+    photo = ThumbnailerImageField(upload_to='photos', verbose_name='Главное фото')
+    title = mds.CharField(max_length=long_len, verbose_name='Заголовок')
+    subtitle = mds.CharField(max_length=short_len, default='',blank=True, verbose_name='Подзаголовок')
+    tour_type = mds.ForeignKey(
+        TourType,
+        on_delete=mds.CASCADE
+    )
+
+    url_name = 'article'
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = 'Статья'
+        verbose_name_plural = 'Статьи'
+
+
+class ArticleSection(TextSection):
+    parent = mds.ForeignKey(
+        Article,
+        on_delete=mds.CASCADE
+    )
+
+    db_manager = mds.Manager()
+
+
+
+
+class TourSection(TextSection):
+    parent = mds.ForeignKey(
         Tour,
         on_delete=mds.CASCADE
     )
 
-    def __str__(self):
-        return self.title
-    
+    db_manager = mds.Manager()
+
+
+
+

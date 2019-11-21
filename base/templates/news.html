@@ -1,0 +1,19 @@
+{% if events %}
+    <section class="sidebar-news">
+      <h2>Ближайшие мероприятия</h2>
+        {% for event in events %}
+          <div class="activity-item">
+            <a href="{% url "event" event.id %}" class="activity-content">
+              <div class="activity-img">
+                <img src="{{event.photo}}" alt="">
+              </div>
+              <div class="activity-text">
+                <span>{{event.publish_date}}</span>
+                <h3>{{event.subtitle}}</h3>
+                <p class="activity-description">{{event.info}}</p>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+    </section>
+{% endif %}

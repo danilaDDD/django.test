@@ -38,12 +38,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-     'main',
-     'contacts',
-     'tours' ,
-     'articles',
-     'events',
-     'base'
+    'main',
+    'contacts',
+    'tours',
+    'events',
+    'base',
+    'section',
+    'easy_thumbnails'
 ]
 
 MIDDLEWARE = [
@@ -58,15 +59,15 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'slavanka.urls'
 
-MAIN_TEMPLATES=os.path.join(BASE_DIR,'/main/templates')
+MAIN_TEMPLATES = os.path.join(BASE_DIR, '/main/templates')
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            os.path.join(BASE_DIR,'base/templates'),
-            os.path.join(BASE_DIR,'main/templates'),
-            os.path.join(BASE_DIR,'events/templates')             
+            os.path.join(BASE_DIR, 'base/templates'),
+            os.path.join(BASE_DIR, 'main/templates'),
+            os.path.join(BASE_DIR, 'events/templates')
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -133,21 +134,36 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
- 
-STATIC_ROOT=os.path.join(BASE_DIR,'static')
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS=[
-    os.path.join(BASE_DIR,'common/static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'common/static')
 ]
 
 STATIC_PRECOMPILER_ROOT = STATIC_ROOT
 STATIC_PRECOMPILER_OUTPUT_DIR = 'output'
 
-#Media files
+# Media files
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
 
 ADMIN_MEDIA_PREFIX = '/static/admin/'
+
+LANGUAGE_CODE = 'ru-RU'
+USE_I18N = True
+
+THUMBNAIL_ALIASES = {
+    '': {
+        'baner': {'size': (500, 1000), 'crop': True},
+        'vrect': {'size': (200, 300), 'crop': True},
+        'grect': {'size': (300, 200), 'crop': True},
+        'main': {'size': (530, 500), 'crop': True},
+        'box': {'size': (300, 300), 'crop': True},
+        'submenu': {'size': (90, 420), 'crop': True},
+        'category': {'size': (90, 300), 'crop': True}
+    },
+}

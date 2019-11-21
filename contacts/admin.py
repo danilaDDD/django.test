@@ -1,17 +1,26 @@
 from django.contrib import admin
 from contacts.models import *
 
-# Register your models here.
+
+class ContactOfficeInlineAdmin(admin.TabularInline):
+    model = OfficeContact
+
+
+class ScheduleItemInlineAdmin(admin.TabularInline):
+    model = ScheduleItem
+
+
 @admin.register(Office)
 class OfficeAdmin(admin.ModelAdmin):
-    list_display=('id','title')
- 
-@admin.register(Phone)
-class PhoneAdmin(admin.ModelAdmin):
-    list_display=('value',)
-
-@admin.register(Email)
-class EmailAdmin(admin.ModelAdmin):
-    list_display=('value',)
+    list_display = ('title', )
+    inlines = [ContactOfficeInlineAdmin, ScheduleItemInlineAdmin]
 
 
+class UnitContactInlineAdmin(admin.TabularInline):
+    model = UnitContact
+
+
+@admin.register(Unit)
+class UnitAdmin(admin.ModelAdmin):
+    list_display = ('title', )
+    inlines = [UnitContactInlineAdmin]

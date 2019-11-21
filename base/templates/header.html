@@ -3,52 +3,61 @@
  <header class="header">
 <div class="wrapper">
     <div class="header-logo">
-      <a href="">
+      <a href="{% url "home" %}">
         <p>туроператор с 1993 года</p>
         <img src="{% static "base/images/logo.png" %}" alt="">
       </a>
     </div>
 
     <div class="header-contacts">
-    {% for office in offices %}
+      {% for office in offices %}
 
-      {% if office.inline %}
-        <div class="main-office">
-        {% else %}
-        <div class="main-office-js">
-      {% endif %}
+            {% if not office.container %}
+                <div class="main-office">
+                   <span class="office-title">{{office.title}}</span>
+                   <p class="office-adress">{{office.address}}</p>
+                    {% for contact in office.contacts %}
+                        {% if contact.contact_type == "P" %}
+                        <a class="office-number" href="tel:{{contact.value}}">{{contact.value}}</a>
+                        {% else %}
+                        <a class="office-mail" href="{{contact.value}}">{{contact.value}}</a>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="worktime">
+                    {% for shed_it in office.shedule_items %}
+                        <p><span>{{shed_it.days}}:</span>{{shed_it.times}}</p>
+                    {% endfor %}
+                    </div>
 
-      <span class="office-title">{{office.title}}</span>
+            {% else %}
+                <div class="main-office main-office-inline">
+                    {% for off in office.offs %}
+                    <div class="main-office-top">
+                     <p class="office-adress">{{off.title}}</p>
 
-      {% if not office.inline %}
-      <p class="office-adress">{{office.address}}</p>      
-      {% endif %}
+                      {% for contact in off.contacts %}
+                        {% if contact.contact_type == "P" %}
+                        <a class="office-number" href="tel:{{contact.value}}">{{contact.value}}</a>
+                        {% else %}
+                        <a class="office-mail" href="{{contact.value}}">{{contact.value}}</a>
+                        {% endif %}
+                      {% endfor %}
 
-      {% for phone in office.phones %}
-      <a class="office-number" href="tel:{{phone.value}}">{{phone.value}}</a>
-       {% endfor %}
+                    </div>
+                     {% endfor %}
+            {% endif %}
+            </div>
+        {% endfor %}
 
-       {% for email in office.emails %}
-      <a class="office-mail" href="{{email.value}}">{{email.value}}</a>
-      {% endfor %}
 
-      <div class="office-work">
-      {% for sh_it in office.shedule_items %}
-        <p><span>{{sh_it.days}}: </span>{{sh_it.times}}</p>
-      {% endfor %}
-      </div>
-
-    </div>      
-    {% endfor %}  
-
-    </div>       
+    </div>
    
       <div class="order">
         <div class="order-phone">
-          <a href="http://slavtour-html.servertest.pro/#">Заказать звонок</a>
+          <a href="#">Заказать звонок</a>
         </div>
         <div class="order-tour">
-          <a href="http://slavtour-html.servertest.pro/#">Заказать тур</a>
+          <a href="#">Заказать тур</a>
         </div>
         <div class="order-contacts">
           <a>Наши контакты</a>
@@ -56,9 +65,8 @@
       </div>
 
     </div>
-</div>
 </header> 
-  </section><section class="menu">
+  <section class="menu">
     <div class="wrapper">
 
       <div class="menu-icon">

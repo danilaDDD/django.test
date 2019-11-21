@@ -1,6 +1,7 @@
 {% extends "base.html" %} 
 
 {% load static %}
+{% load thumbnail %}
 
 {% block title %}Home{% endblock title %}
 
@@ -9,16 +10,15 @@
 {% endblock style %}
 
 {% block article %}
- 
   <section class="presentation">
     <div class="wrapper">
       <div class="presentation-content">
           {% for baner in baners %}          
-          <div class="presentation-item" style="background-image:url({{baner.photo.url}});">                
-                <a class="presentation-dropdown" href="/tours/?baner_id={{baner.id}}">{{baner.title}}</a>
+          <div class="presentation-item" style="background-image:url({{baner.photo.baner.url}});">
+                <a class="presentation-dropdown" href="{% url "tour_list" %}?baner_id={{baner.id}}">{{baner.title}}</a>
                 <ul class="presentation-list">
                     {% for tour_type in baner.tour_types %}
-                    <li><a href="/tours/?tour_type_id={{tour_type.id}}">{{tour_type.title}}</a></li>
+                    <li><a href="{% url "tour_list" %}?tour_type_id={{tour_type.id}}">{{tour_type.title}}</a></li>
                     {% endfor %}                   
                 </ul>
             </div>
@@ -37,13 +37,7 @@
             <li class="list__item">Создатель регионального экскурсионно-образовательного проекта «Псковские уроки», включенного в федеральную программу «Живые уроки»</li>
             <li class="list__item">Член Межрегионального координационного совета и Экспертного совета федеральной программы «Живые уроки»</li>
             <li class="list__item">Член Российского Союза Туриндустрии, Торгово-Промышленной Палаты Псковской области, Псковского областного союза туриндустрии</li>
-            <!-- <li class="list__item">Член объединения ведущих туроператоров Псковской области «Балтийский клуб»</li>
-            <li class="list__item">Постоянный участник международных, российских и региональных туристических выставок</li>
-            <li class="list__item">Единственный официальный представитель Сети Магазинов Горящих Путевок в г.Пскове</li>
-            <li class="list__item">Разработчик разноуровневых маршрутов по ключевым ганзейским городам в рамках празднования 39 Международных Ганзейских дней Нового времени в Пскове (XXXIX International Hanseatic Days 2019)</li>
-            <li class="list__item">ООО «Славянский тур» является участником федеральных проектов «Серебряное ожерелье России», «Русские усадьбы»</li>
-            <li class="list__item">Организация MICE мероприятий</li>
-            <li class="list__item">Спонсор многих городских и областных мероприятий, активный участник международных программ</li> -->
+
           </ul>
           <a class="btn-white btn-list" href="http://slavtour-html.servertest.pro/">
             <span>Читать полностью</span>
@@ -60,13 +54,13 @@
           {% for tour in tours %}
             <div class="project-block__item">
               <div class="project-img">
-                <img src="{{tour.photo.url}}" alt="">
+                <img src="{{tour.photo.vrect.url}}" alt="">
                 <img class="project-img-top" src="{{tour.logotip.url}}" alt="">
               </div>
               <div class="project-info">
                 <h3>{{tour.title}}</h3>
                 <p>{{tour.info}}</p>
-                <a href="http://slavtour-html.servertest.pro/#" class="btn-white">
+                <a href="{% url "tour" tour.id %}" class="btn-white">
                   <span>Узнать больше</span>
                   <img src="{% static "base/images/vector/arrow.png" %}" alt="">
                 </a>
@@ -83,7 +77,7 @@
         <div class="wrapper">
           <div class="header-block">
             <h2>Ближайшие мероприятия</h2>
-            <a href="http://slavtour-html.servertest.pro/#">Смотреть все мероприятия</a>
+            <a href="{% url "event_list" %}">Смотреть все мероприятия</a>
           </div>
         </div>
       </section>
@@ -93,9 +87,9 @@
           <div class="activity-container">
           {% for event in events %}
             <div class="activity-item">
-              <a href="/events/{{event.id}}/" class="activity-content">
+              <a href="{% url "event" event.id %}/" class="activity-content">
                 <div class="activity-img">
-                  <img src="{{event.photo.url}}" alt="">
+                  <img src="{{event.photo.grect.url}}" alt="">
                 </div>
                 <div class="activity-text">
                   <span>{{event.publish_date}}</span>
