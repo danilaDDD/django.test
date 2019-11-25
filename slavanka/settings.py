@@ -16,7 +16,6 @@ from django.contrib.staticfiles.storage import StaticFilesStorage
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
@@ -27,7 +26,6 @@ SECRET_KEY = 'll39lml6sjs%@-@p^y$+99&69qer+*e9x)vq8=kg$tx&8k4^6%'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -44,7 +42,8 @@ INSTALLED_APPS = [
     'events',
     'base',
     'section',
-    'easy_thumbnails'
+    'easy_thumbnails',
+    'ckeditor'
 ]
 
 MIDDLEWARE = [
@@ -83,20 +82,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'slavanka.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'tours',
-        'USER': 'django',
-        'PASSWORD': 'float123',
-        'HOST': 'localhost',   # Or an IP Address that your DB is hosted on
-        'PORT': '3306'
-    }
-}
 
 
 # Password validation
@@ -117,7 +105,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -130,7 +117,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
@@ -161,9 +147,31 @@ THUMBNAIL_ALIASES = {
         'baner': {'size': (500, 1000), 'crop': True},
         'vrect': {'size': (200, 300), 'crop': True},
         'grect': {'size': (300, 200), 'crop': True},
-        'main': {'size': (530, 500), 'crop': True},
+        'main': {'size': (500, 500), 'crop=scala': True},
         'box': {'size': (300, 300), 'crop': True},
         'submenu': {'size': (90, 420), 'crop': True},
         'category': {'size': (90, 300), 'crop': True}
     },
 }
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Bold', 'Italic', 'Underline'],
+            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter',
+             'JustifyRight', 'JustifyBlock'],
+            ['Link', 'Unlink'],
+            ['RemoveFormat', 'Source'],
+            {'name': 'insert',
+
+             'items': ['Image', 'Table']},
+        ]
+
+    }
+}
+
+try:
+    from .local_setting import *
+except ImportError:
+    pass

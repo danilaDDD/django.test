@@ -1,7 +1,7 @@
 from django.db import models as mds
 from easy_thumbnails.fields import ThumbnailerImageField
 
-from slavanka.params import short_len, long_len, DB_TIME_FORMAT
+from slavanka.params import short_len, long_len
 from base.models import DataModel
 from section.models import TextSection
 
@@ -83,7 +83,7 @@ class Tour(DataModel):
         else:
             data_list = Tour.objects.all()
 
-        data_list = list(data_list) + list(Article.get_response(baner_id,tour_type_id))
+        data_list = list(data_list) + list(Article.get_response(baner_id, tour_type_id))
 
         return data_list
 
@@ -128,6 +128,19 @@ class Tour(DataModel):
         verbose_name_plural = 'Туры'
 
 
+class TourSection(TextSection):
+    parent = mds.ForeignKey(
+        Tour,
+        on_delete=mds.CASCADE
+    )
+
+    db_manager = mds.Manager()
+
+    class Meta:
+        verbose_name = 'Параграф тура'
+        verbose_name_plural = 'Параграфы туров'
+
+
 class Article(DataModel):
     @staticmethod
     def get_response(baner_id=None, tour_type_id=None):
@@ -150,6 +163,7 @@ class Article(DataModel):
     )
 
     url_name = 'article'
+
     def __str__(self):
         return self.title
 
@@ -166,17 +180,6 @@ class ArticleSection(TextSection):
 
     db_manager = mds.Manager()
 
-
-
-
-class TourSection(TextSection):
-    parent = mds.ForeignKey(
-        Tour,
-        on_delete=mds.CASCADE
-    )
-
-    db_manager = mds.Manager()
-
-
-
-
+    class Meta:
+        verbose_name = 'Параграф статьи'
+        verbose_name_plural = 'Параграфы статей'

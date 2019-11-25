@@ -1,20 +1,45 @@
-from base.views import SvkBaseView,SvkListView
-from events.models import Event
+from base.views import SvkDetailsView, SvkListView
+from .models import Event,EventSection
+
 
 # Create your views here.
 
 
 class EventListView(SvkListView):
-     news = True
-     model = Event
-     site_title = "Список мероприятий"
+    model = Event
+    title = "Список мероприятий"
+    add_bread = [{
+        'url_name': 'event_list',
+        'title': 'мероприятия',
+        'args': []
+    }]
 
 
-class EventDetailsView(SvkBaseView):
+class EventDetailsView(SvkDetailsView):
+    article_model = Event
+    section_model = EventSection
+
     news = True
+    title = 'Событие'
 
-    def get(self, request, id, **kwargs):
-        context = self.get_context_data(**kwargs)
-        context['event'] = Event.objects.get(pk=id)
+    def get_(self, request, id, **kwargs):
+        context = super(EventDetailsView, self).get_context_data(**kwargs)
+        context['events'] = Event.objects.order_by('date')
+        context['news'] = True
 
         return self.render_to_response(context)
+
+    def calc_bread(self, id):
+        root_bread = self._root_bread
+        add_bread = [{
+            'url_name': 'event_list',
+            'title': 'мероприятия',
+            'args': []
+        }, {
+            'url_name': 'event',
+            'title': 'мероприятие',
+            'args': [id]
+        }]
+
+        return self.handed_bread_crumbs(root_bread + add_bread)
+

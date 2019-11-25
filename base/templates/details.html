@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% load static %}
+{% load thumbnail %}
+
+{% block title %}{{title}}{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static "base/css/ditails.css" %}">
+{% endblock style %}
+
+{% block article %}
+<section class="article">
+
+        {% include "submenu.html" %}
+        {% include "breadcrumbs.html" %}
+
+        <div class="article-content">
+          <div class="wrapper">
+            {% if aside %}
+              {% include "aside.html" %}
+            {% endif %}
+            <div class="content content-article-two">
+              <div class="content-header">
+                <h2>{{article.get_title}}</h2>
+              </div>
+              <div class="content-img">
+                <img src="{{article.photo.main.url}}" alt="">
+              </div>
+               {% for day in article.days %}
+              <div class="schedule">
+                <div class="schedule__item">
+                  <h2>День {{day.count}}</h2>
+                  <div class="info">
+                  {% for section in day.sections %}
+                    <div class="info__item">
+                      <p class="info-header">{{section.title}}</p>
+                      <p>{{section.text}}</p>
+                      <span>{{section.time}}</span>
+                    </div>
+                  {% endfor %}
+
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+
+            </div>
+            {% if news %}
+                {% include "news.html" %}
+            {% endif %}
+
+          </div>
+        </div>
+</section>
+
+{% endblock %}

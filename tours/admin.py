@@ -1,7 +1,11 @@
 from django.contrib import admin
 from tours.models import *
 
+
 # Register your models here.
+from tours.models import Article, ArticleSection
+
+
 @admin.register(Tour)
 class TourAdmin(admin.ModelAdmin):
     list_display = ('title',)
@@ -12,6 +16,7 @@ class TourAdmin(admin.ModelAdmin):
 @admin.register(TourType)
 class TourTypeAdmin(admin.ModelAdmin):
     list_display = ('title',)
+
 
 
 class TourTypeInlineAdmin(admin.TabularInline):
@@ -27,6 +32,7 @@ class TourBanerAdmin(admin.ModelAdmin):
 @admin.register(TourSection)
 class TourSectionAdmin(admin.ModelAdmin):
     list_display = ('title',)
+
 
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):

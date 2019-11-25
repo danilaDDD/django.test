@@ -87,7 +87,7 @@
           <div class="activity-container">
           {% for event in events %}
             <div class="activity-item">
-              <a href="{% url "event" event.id %}/" class="activity-content">
+              <a href="{% url "event" event.id %}" class="activity-content">
                 <div class="activity-img">
                   <img src="{{event.photo.grect.url}}" alt="">
                 </div>

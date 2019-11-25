@@ -11,8 +11,8 @@ class DataModel(mds.Model):
     def get_details(self, section_class):
         all_sections = section_class.db_manager.filter(parent=self).order_by('day', 'id')
 
-        count = 1
-        days = [{"count": count, "sections": []}]
+        count = 0
+        days = []
         for section in all_sections:
             if section.day != count:
                 count += 1

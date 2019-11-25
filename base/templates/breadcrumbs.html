@@ -1,0 +1,11 @@
+<section class="breadcrumbs">
+  <div class="wrapper">
+    <ul>
+    {% for brd in breadcrums %}
+      <li>
+        <a href="{{brd.url}}">{{brd.title}}</a>
+      </li>
+    {% endfor %}
+    </ul>
+  </div>
+</section>

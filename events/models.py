@@ -4,6 +4,8 @@ from easy_thumbnails.fields import ThumbnailerImageField
 from slavanka.params import short_len, long_len
 from base.models import DataModel
 from section.models import TextSection
+
+
 # Create your models here.
 
 
@@ -52,4 +54,4 @@ class EventSection(TextSection):
 
     class Meta:
         verbose_name = 'Параграф события'
-        verbose_name_plural = 'Парагравы события'
+        verbose_name_plural = 'Параграфы события'

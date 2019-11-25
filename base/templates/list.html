@@ -12,15 +12,8 @@
  {% block article %}
 <section class="page">
 {% include "submenu.html" %}
-<section class="breadcrumbs">
-  <div class="wrapper">
-    <ul>
-      <li>
-        <a href="">Главная</a>
-      </li>
-    </ul>
-  </div>
-</section>
+{% include "breadcrumbs.html" %}
+
         <div class="page-content inner-category">
           <div class="wrapper">
               {% if aside %}
