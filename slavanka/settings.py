@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
-from django.contrib.staticfiles.storage import StaticFilesStorage
+
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -42,8 +42,7 @@ INSTALLED_APPS = [
     'events',
     'base',
     'section',
-    'easy_thumbnails',
-    'ckeditor'
+    'easy_thumbnails'
 ]
 
 MIDDLEWARE = [
@@ -63,11 +62,7 @@ MAIN_TEMPLATES = os.path.join(BASE_DIR, '/main/templates')
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [
-            os.path.join(BASE_DIR, 'base/templates'),
-            os.path.join(BASE_DIR, 'main/templates'),
-            os.path.join(BASE_DIR, 'events/templates')
-        ],
+        'DIRS':[],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -154,22 +149,6 @@ THUMBNAIL_ALIASES = {
     },
 }
 
-CKEDITOR_CONFIGS = {
-    'default': {
-        'toolbar': 'Custom',
-        'toolbar_Custom': [
-            ['Bold', 'Italic', 'Underline'],
-            ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'JustifyLeft', 'JustifyCenter',
-             'JustifyRight', 'JustifyBlock'],
-            ['Link', 'Unlink'],
-            ['RemoveFormat', 'Source'],
-            {'name': 'insert',
-
-             'items': ['Image', 'Table']},
-        ]
-
-    }
-}
 
 try:
     from .local_setting import *

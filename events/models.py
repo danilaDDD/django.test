@@ -19,7 +19,7 @@ class Event(DataModel):
             return all_events
 
     @staticmethod
-    def get_response(baner_id=None, tour_type_id=None):
+    def filtreted_by_baner_info(baner_id=None, tour_type_id=None):
         return Event.objects.order_by('date')
 
     photo = ThumbnailerImageField(upload_to='photos', verbose_name='Главное фото', null=True)
@@ -35,6 +35,9 @@ class Event(DataModel):
 
     def get_date(self):
         return self.publish_date
+
+    def get_baner_info(self):
+        return None, None
 
     def __str__(self):
         return self.title

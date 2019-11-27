@@ -10,6 +10,7 @@ from base.views import SvkBaseView
 
 class HomeView(SvkBaseView):
     template_name = 'index.html'
+    title = 'Главная'
 
     def get_context_data(self, **kwards):
         context = super(HomeView, self).get_context_data(**kwards)

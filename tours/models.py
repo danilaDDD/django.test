@@ -74,7 +74,7 @@ class Tour(DataModel):
             return all_tours
 
     @staticmethod
-    def get_response(baner_id=None, tour_type_id=None):
+    def filtreted_by_baner_info(baner_id=None, tour_type_id=None):
         data_list = []
         if tour_type_id is not None:
             data_list = Tour.objects.filter(tour_type__id=tour_type_id)
@@ -83,7 +83,7 @@ class Tour(DataModel):
         else:
             data_list = Tour.objects.all()
 
-        data_list = list(data_list) + list(Article.get_response(baner_id, tour_type_id))
+        data_list = list(data_list) + list(Article.filtreted_by_baner_info(baner_id, tour_type_id))
 
         return data_list
 
@@ -120,6 +120,17 @@ class Tour(DataModel):
 
         return str(days) + msg
 
+    def get_baner_info(self):
+        tour_type_id = self.tour_type.id
+
+        baner = ToursBanner.objects.filter(tourtype__id=tour_type_id).first()
+        if baner is not None:
+            baner_id = baner.id
+        else:
+            baner_id = None
+
+        return baner_id, tour_type_id
+
     def __str__(self):
         return self.title
 
@@ -143,7 +154,7 @@ class TourSection(TextSection):
 
 class Article(DataModel):
     @staticmethod
-    def get_response(baner_id=None, tour_type_id=None):
+    def filtreted_by_baner_info(baner_id=None, tour_type_id=None):
         articls = []
         if tour_type_id is not None:
             articls = Article.objects.filter(tour_type__id=tour_type_id)
@@ -163,6 +174,17 @@ class Article(DataModel):
     )
 
     url_name = 'article'
+
+    def get_baner_info(self):
+        tour_type_id = self.tour_type.id
+
+        baner = ToursBanner.objects.filter(tourtype__id=tour_type_id).first()
+        if baner is not None:
+            baner_id = baner.id
+        else:
+            baner_id = None
+
+        return baner_id, tour_type_id
 
     def __str__(self):
         return self.title

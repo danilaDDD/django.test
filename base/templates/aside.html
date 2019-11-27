@@ -1,11 +1,12 @@
- <aside class="sidebar">
+
+<aside class="sidebar">
      {% if baner_id %}
        {% if tour_type_id %}
          {% for baner in baners %}
            {% if baner.id == baner_id %}
              <div class="category active-category">
                <div class="category-btn">
-                  <h3>{{ baner.title }}</h3>
+                   <a href="{% url "tour_list" %}?baner_id={{baner.id}}"><h3>{{ baner.title }}</h3></a>
                </div>
 
                <ul class="category-content">
@@ -24,7 +25,7 @@
            {% else %}
             <div class="category">
                 <div class="category-btn">
-                      <h3>{{ baner.title }}</h3>
+                 <a href="{% url "tour_list" %}?baner_id={{baner.id}}"><h3>{{ baner.title }}</h3></a>
                 </div>
             </div>
            {% endif %}
@@ -36,7 +37,7 @@
               {% if baner.id == baner_id %}
                 <div class="category active-category">
                     <div class="category-btn">
-                      <h3>{{ baner.title }}</h3>
+                     <a href="{% url "tour_list" %}?baner_id={{baner.id}}"><h3>{{ baner.title }}</h3></a>
                     </div>
 
                    <ul class="category-content">
@@ -50,7 +51,7 @@
               {% else %}
                   <div class="category">
                       <div class="category-btn">
-                          <h3>{{ baner.title }}</h3>
+                          <a href="{% url "tour_list" %}?baner_id={{baner.id}}"><h3>{{ baner.title }}</h3></a>
                       </div>
                   </div>
               {% endif %}
@@ -62,7 +63,7 @@
          {% for baner in baners %}
                <div class="category">
                   <div class="category-btn">
-                     <h3>{{ baner.title }}</h3>
+                     <a href="{% url "tour_list" %}?baner_id={{baner.id}}"><h3>{{ baner.title }}</h3></a>
                   </div>
               </div>
          {% endfor %}

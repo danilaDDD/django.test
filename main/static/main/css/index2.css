@@ -30,8 +30,6 @@
 /*------------------------------------*\
   # Placeholder
 \*------------------------------------*/
-{% load static %}
-
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -2026,7 +2024,12 @@ a {
   .sidebar .category {
     cursor: pointer;
     margin-bottom: 20px; }
-
+    .sidebar .category:first-child .category-btn {
+      background-image: url(../images/submenu-item-1.png);
+      background-size: cover;
+      background-repeat: no-repeat; }
+      .sidebar .category:first-child .category-btn h3 {
+        color: #ffffff; }
   .sidebar .category-btn {
     padding: 20px;
     background-color: #ffffff;
@@ -2331,7 +2334,10 @@ a {
           background-image: url(../images/submenu-item-1.png);
           background-size: cover;
           background-repeat: no-repeat; }
-
+          .submenu .wrapper ul li:first-child a {
+            color: #ffffff; }
+            .submenu .wrapper ul li:first-child a:hover span {
+              color: #e4e4e4; }
           .submenu .wrapper ul li:first-child:before {
             display: none; }
         .submenu .wrapper ul li:last-child:before {
@@ -3268,4 +3274,3 @@ img.mfp-img {
     margin: 1cm; }
   body {
     background-color: #fff; } }
-

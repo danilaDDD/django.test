@@ -23,10 +23,10 @@
             <div class="info">
             {% for baner in baners %}
               <div class="info-item">
-                <a class="info-item-header" href="http://slavtour-html.servertest.pro/">{{baner.title}}</a>
+                <a class="info-item-header" href="{% url "tour_list" %}?baner_id=baner.id">{{baner.title}}</a>
                 <ul class="list">
                 {% for tour_type in baner.tour_types %}
-                <li><a href="http://slavtour-html.servertest.pro/">{{tour_type.title}}</a></li>
+                <li><a href=""{% url "tour_list" %}?baner_id=baner.id&tour_type_id=tour_type.id"">{{tour_type.title}}</a></li>
                 {% endfor %}
                 </ul>
               </div>
@@ -82,6 +82,7 @@
       </div>
    </div>
     </div>
+
 
 
 <div class="footer-bottom">

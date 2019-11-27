@@ -10,9 +10,6 @@ from events.models import Event
 # Create your views here.
 
 
-
-
-
 class SvkBaseView(TemplateView):
     title = "Page"
     _root_bread = [{'url_name': 'home', 'title': 'Главная', 'args': []}]
@@ -55,7 +52,7 @@ class SvkListView(SvkBaseView):
 
         baner_id, tour_type_id = handed_banner_params(request)
 
-        context['objects'] = self.model.get_response(baner_id, tour_type_id)
+        context['objects'] = self.model.filtreted_by_baner_info(baner_id, tour_type_id)
         context['title'] = self.title
 
         context['baner_id'] = baner_id
@@ -85,11 +82,10 @@ class SvkDetailsView(SvkBaseView):
     def get(self, request, id, **kwargs):
         context = super(SvkDetailsView, self).get_context_data(**kwargs)
 
-        baner_id, tour_type_id = handed_banner_params(request)
-
         article = self.article_model.objects.get(pk=id)
         context['article'] = article.get_details(self.section_model)
 
+        baner_id, tour_type_id = article.get_baner_info()
         context['baner_id'] = baner_id
         context['tour_type_id'] = tour_type_id
 

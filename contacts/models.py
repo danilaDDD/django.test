@@ -24,8 +24,23 @@ class Office(mds.Model):
             offs_list.append(office)
 
             if len(office.units) > 0:
+
+                toggle = True
+                count = 0
                 for unit in office.units:
                     unit.contacts = UnitContact.objects.filter(unit=unit)
+
+                    if count >= 2:
+                        unit.pos = None
+                    else:
+                        if toggle:
+                            unit.pos = 'top'
+                        else:
+                            unit.pos = 'bottom'
+
+                        toggle = not toggle
+                        count += 1
+
 
                 container = UnitsContainer(office.units)
                 offs_list.append(container)

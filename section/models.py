@@ -1,6 +1,6 @@
 from django.db import models as mds
 from slavanka.params import long_len,short_len
-from ckeditor.fields import RichTextField
+
 
 # Create your models here.
 
@@ -10,7 +10,7 @@ class TextSection(mds.Model):
     title = mds.CharField(max_length=short_len, default='' ,
                           blank=True, verbose_name='Заголовок'
                           )
-    text = RichTextField(default='', blank=True, verbose_name='Текст')
+    text = mds.TextField(default='', blank=True, verbose_name='Текст')
     day = mds.IntegerField(blank=True, verbose_name='День')
 
     parent: mds.ForeignKey = None

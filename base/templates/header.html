@@ -32,40 +32,43 @@
             {% else %}
                 <div class="main-office main-office-inline">
                     {% for off in office.offs %}
-                    <div class="main-office-top">
-                     <p class="office-adress">{{off.title}}</p>
+                        {% if off.pos %}
+                            <div class="main-office-{{off.pos}}">
+                             <p class="office-adress">{{off.title}}</p>
 
-                      {% for contact in off.contacts %}
-                        {% if contact.contact_type == "P" %}
-                        <a class="office-number" href="tel:{{contact.value}}">{{contact.value}}</a>
-                        {% else %}
-                        <a class="office-mail" href="{{contact.value}}">{{contact.value}}</a>
+                              {% for contact in off.contacts %}
+                                    {% if contact.contact_type == "P" %}
+                                    <a class="office-number" href="tel:{{contact.value}}">{{contact.value}}</a>
+                                    {% else %}
+                                    <a class="office-mail" href="{{contact.value}}">{{contact.value}}</a>
+                                    {% endif %}
+                              {% endfor %}
+                            </div>
                         {% endif %}
-                      {% endfor %}
 
-                    </div>
-                     {% endfor %}
+                    {% endfor %}
             {% endif %}
             </div>
         {% endfor %}
 
-
-    </div>
-   
-      <div class="order">
-        <div class="order-phone">
-          <a href="#">Заказать звонок</a>
         </div>
-        <div class="order-tour">
-          <a href="#">Заказать тур</a>
-        </div>
-        <div class="order-contacts">
-          <a>Наши контакты</a>
+         <div class="order">
+        <div class="wrapper">
+            <div class="order-phone">
+              <a href="#">Заказать звонок</a>
+            </div>
+            <div class="order-tour">
+              <a href="#">Заказать тур</a>
+            </div>
+            <div class="order-contacts">
+              <a>Наши контакты</a>
+            </div>
         </div>
       </div>
-
     </div>
-</header> 
+ </header>
+
+
   <section class="menu">
     <div class="wrapper">
 

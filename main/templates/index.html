@@ -1,7 +1,6 @@
-{% extends "base.html" %} 
+{% extends "base.html" %}
 
 {% load static %}
-{% load thumbnail %}
 
 {% block title %}Home{% endblock title %}
 
@@ -10,22 +9,23 @@
 {% endblock style %}
 
 {% block article %}
+
   <section class="presentation">
     <div class="wrapper">
       <div class="presentation-content">
-          {% for baner in baners %}          
+          {% for baner in baners %}
           <div class="presentation-item" style="background-image:url({{baner.photo.baner.url}});">
                 <a class="presentation-dropdown" href="{% url "tour_list" %}?baner_id={{baner.id}}">{{baner.title}}</a>
                 <ul class="presentation-list">
                     {% for tour_type in baner.tour_types %}
                     <li><a href="{% url "tour_list" %}?tour_type_id={{tour_type.id}}">{{tour_type.title}}</a></li>
-                    {% endfor %}                   
+                    {% endfor %}
                 </ul>
             </div>
-            {% endfor %}         
+            {% endfor %}
       </div>
     </div>
-  </section>   
+  </section>
   <section class="info-list">
         <div class="wrapper">
           <div class="header-block">
@@ -37,7 +37,13 @@
             <li class="list__item">Создатель регионального экскурсионно-образовательного проекта «Псковские уроки», включенного в федеральную программу «Живые уроки»</li>
             <li class="list__item">Член Межрегионального координационного совета и Экспертного совета федеральной программы «Живые уроки»</li>
             <li class="list__item">Член Российского Союза Туриндустрии, Торгово-Промышленной Палаты Псковской области, Псковского областного союза туриндустрии</li>
-
+            <!-- <li class="list__item">Член объединения ведущих туроператоров Псковской области «Балтийский клуб»</li>
+            <li class="list__item">Постоянный участник международных, российских и региональных туристических выставок</li>
+            <li class="list__item">Единственный официальный представитель Сети Магазинов Горящих Путевок в г.Пскове</li>
+            <li class="list__item">Разработчик разноуровневых маршрутов по ключевым ганзейским городам в рамках празднования 39 Международных Ганзейских дней Нового времени в Пскове (XXXIX International Hanseatic Days 2019)</li>
+            <li class="list__item">ООО «Славянский тур» является участником федеральных проектов «Серебряное ожерелье России», «Русские усадьбы»</li>
+            <li class="list__item">Организация MICE мероприятий</li>
+            <li class="list__item">Спонсор многих городских и областных мероприятий, активный участник международных программ</li> -->
           </ul>
           <a class="btn-white btn-list" href="http://slavtour-html.servertest.pro/">
             <span>Читать полностью</span>
@@ -77,7 +83,7 @@
         <div class="wrapper">
           <div class="header-block">
             <h2>Ближайшие мероприятия</h2>
-            <a href="{% url "event_list" %}">Смотреть все мероприятия</a>
+            <a href="http://slavtour-html.servertest.pro/#">Смотреть все мероприятия</a>
           </div>
         </div>
       </section>
@@ -87,7 +93,7 @@
           <div class="activity-container">
           {% for event in events %}
             <div class="activity-item">
-              <a href="{% url "event" event.id %}" class="activity-content">
+              <a href="{% url "event" event.id %}"" class="activity-content">
                 <div class="activity-img">
                   <img src="{{event.photo.grect.url}}" alt="">
                 </div>
@@ -99,7 +105,7 @@
               <p class="activity-description">{{event.subtitle}}</p>
             </div>
           {% endfor %}
-             
+
           </div>
         </div>
       </section>
