@@ -1,7 +1,7 @@
 astroid==2.3.2
 certifi==2019.9.11
 colorama==0.4.1
-Django==2.2.5
+Django==2.2.8
 django-js-asset==1.2.2
 django-static-precompiler==1.8.2
 easy-thumbnails==2.6
